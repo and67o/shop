@@ -13,9 +13,10 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param int $categoryId
      * @return Factory|Application|View
      */
-    public function index()
+    public function index($categoryId = 0)
     {
         return view('items.index');
     }
