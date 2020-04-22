@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Category
@@ -18,18 +19,64 @@ class Category extends Model
 {
     protected $table = 'categories';
 
+    protected $casts = [
+        'id' => 'integer',
+        'parent_id' => 'integer',
+    ];
 
-    public static function getCategories1(): array
+    /**
+     * @return HasMany
+     */
+    public function products()
     {
-        $categories = self::all('id', 'name');
-        return $categories->map(function (self $category) use ($categories) {
-            return [
-                'id' => $category->id,
-                'children' => $categories
-                    ->where('parent_id', $category->id)
-                    ->toArray(),
-                'parent' => $category->parent_id
-            ];
-        })->toArray();
+        return $this->hasMany(Product::class);
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param int $parent_id
+     */
+    public function setParentId(int $parent_id): void
+    {
+        $this->parent_id = $parent_id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getParentId(): int
+    {
+        return $this->parent_id;
     }
 }

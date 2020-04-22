@@ -14,12 +14,19 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/items/{category_id?}', 'ItemController@index')->name('items.index');
-Route::get('item/create', 'ItemController@create')->name('item.create');
-Route::get('item/show/{id}', 'ItemController@show')->name('item.show');
-Route::get('item/edit/{id}', 'ItemController@edit')->name('item.edit');
+Route::get('/products/{category_id?}', 'ProductController@index')->name('products.index');
+Route::get('/item/create', 'ProductController@create')->name('product');
+//Route::get('/item/show/{id}', 'ProductController@show')->name('product-show');
+//Route::get('/item/edit/{id}', 'ProductController@edit')->name('product-edit');
 
-Route::post('item/store', 'ItemController@store')->name('item.store');
+Route::get('/basket', 'BasketController@index')->name('basket');
+Route::post('/basket/add/{id}', 'BasketController@basketAdd')->name('basket-add');
+Route::post('/basket/remove/{id}', 'BasketController@basketRemove')->name('basket-remove');
+Route::get('/basket/place', 'BasketController@basketPlace')->name('basket-place');
+Route::post('/basket/place', 'BasketController@basketConfirm')->name('basket-confirm');
+
+
+//Route::post('/item/store', 'ProductController@store')->name('product-store');
 
 Auth::routes();
 

@@ -3,12 +3,15 @@
         <a class="nav-link" href="{{ route('home') }}">Главная</a>
     </li>
     <li class="nav-item active">
+        <a class="nav-link" href="{{ route('basket') }}">Корзина</a>
+    </li>
+    <li class="nav-item active">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Товары</a>
             <div class="dropdown">
                 <ul class="dropdown-menu">
                     @foreach($categories as $category)
                         <li>
-                            <a href="{{route('items.index', ['category_id' => $category['id']])}}">{{ $category['name'] }}</a>
+                            <a href="{{route('products.index', ['category_id' => $category['id']])}}">{{ $category['name'] }}</a>
                         </li>
                     @endforeach
                 </ul>
