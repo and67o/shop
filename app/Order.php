@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $phone
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property integer user_id
  */
 class Order extends Model
 {
@@ -41,6 +42,21 @@ class Order extends Model
         return $this->id;
     }
 
+    /**
+     * @return int
+     */
+    public function getUserId(): int
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param int $user_id
+     */
+    public function setUserId(int $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
     /**
      * @param string $phone
      */

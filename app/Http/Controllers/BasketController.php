@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 /**
@@ -54,6 +55,11 @@ class BasketController extends Controller
             $pivotRow->update();
         } else {
             $order->products()->attach($productId);
+        }
+
+        if (Auth::check()) {
+            $order->setUserId(Auth::id());
+            $order->save();
         }
 
         /* @var $product Product */
@@ -109,14 +115,19 @@ class BasketController extends Controller
 
     public function basketConfirm(Request $request)
     {
+        $name = (string)$request->input('name');
+        $phone = (string)$request->input('phone');
         $orderId = session('orderId');
         if (is_null($orderId)) {
             return redirect()->route('home');
         }
         /* @var $order Order */
         $order = Order::query()->find($orderId);
+        if (is_null($order)) {
+            return redirect()->route('home');
+        }
 
-        $success = $order->saveOrder($request->input('name'), $request->input('phone'));
+        $success = $order->saveOrder($name, $phone);
         if ($success) {
             session()->flash('success', 'заказ в обработке');
         } else {
