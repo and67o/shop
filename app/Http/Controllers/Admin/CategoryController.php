@@ -10,6 +10,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 
+/**
+ * Class CategoryController
+ * @package App\Http\Controllers\Admin
+ */
 class CategoryController extends Controller
 {
     /**
@@ -21,7 +25,6 @@ class CategoryController extends Controller
     {
         $categories = Category::get();
         return view('auth.categories.index', compact('categories'));
-//        view('auth.categories.index', compact('categories'));
     }
 
     /**

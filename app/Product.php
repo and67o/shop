@@ -30,6 +30,8 @@ class Product extends Model
         'category_id' => 'integer',
     ];
 
+    protected $fillable = ['name', 'price', 'category_id', 'description', 'image'];
+
     /**
      * @return float
      */
