@@ -28,6 +28,6 @@ class User extends Authenticatable
     ];
 
     public function isAdmin() {
-        $this->is_admin = 1;
+        return $this->is_admin == 1;
     }
 }

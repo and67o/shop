@@ -11,7 +11,15 @@
                 <ul class="dropdown-menu">
                     @foreach($categories as $category)
                         <li>
-                            <a href="{{route('products.index', ['category_id' => $category['id']])}}">{{ $category['name'] }}</a>
+                            @if($category['id'] > 0)
+                                <a href="{{route('products.index', ['category_id' => $category['id']])}}">
+                                    {{ $category['name'] }}
+                                </a>
+                            @else
+                                <a href="{{route('products.index')}}">
+                                    {{ $category['name'] }}
+                                </a>
+                            @endif
                         </li>
                     @endforeach
                 </ul>

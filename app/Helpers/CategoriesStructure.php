@@ -12,13 +12,14 @@ use App\Category;
  */
 class CategoriesStructure
 {
-    /**
-     * @return array
-     */
-    public static function getCategories(): array
+
+    public static function getCategories()
     {
         //TODO Сделать структуру с parent и children
         return Category::all('id', 'name')
-            ->toArray();
+            ->push(['id' => 0,
+                'name' => 'все'
+            ])
+            ->sortBy('id');
     }
 }
