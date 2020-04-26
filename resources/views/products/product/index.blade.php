@@ -1,5 +1,5 @@
 <div class="product">
-    <img class="" src="{{ asset('img/item.png') }}" alt="{{ $product->description }}">
+    <img class="" src="{{\Illuminate\Support\Facades\Storage::url($product->image)}}" alt="{{ $product->description }}">
     <div class="product__info">
         <div class="">
             <p class="">{{$product->name}}</p>

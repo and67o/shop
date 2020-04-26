@@ -12,7 +12,7 @@
                     @foreach($categories as $category)
                         <li>
                             @if($category['id'] > 0)
-                                <a href="{{route('products.index', ['category_id' => $category['id']])}}">
+                                <a href="{{route('products', ['category_id' => $category['id']])}}">
                                     {{ $category['name'] }}
                                 </a>
                             @else

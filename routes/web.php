@@ -14,10 +14,9 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/products/{category_id?}', 'ProductController@index')->name('products.index');
+Route::get('/products/{category_id?}', 'ProductController@index')->name('products');
 Route::get('/item/create', 'ProductController@create')->name('product');
-//Route::get('/item/show/{id}', 'ProductController@show')->name('product-show');
-//Route::get('/item/edit/{id}', 'ProductController@edit')->name('product-edit');
+
 Auth::routes([
     'reset' => false,
     'confirm' => false,

@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <td>Картинка</td>
-                <td><img src="http://laravel-diplom-1.rdavydov.ru/storage/categories/appliance.jpg" height="240px"></td>
+                <td><img src="{{\Illuminate\Support\Facades\Storage::url($category->image)}}"></td>
             </tr>
             <tr>
                 <td>Кол-во товаров</td>

@@ -21,8 +21,7 @@
                             <tr>
                                 <td>
                                     <a href="{{route('product', [$product->id])}}">
-                                        <img height="56px"
-                                             src="http://internet-shop.tmweb.ru/storage/products/iphone_x_silver.jpg">
+                                        <img height="56px" src="{{\Illuminate\Support\Facades\Storage::url($product->image)}}">
                                         {{$product->name}}
                                     </a>
                                 </td>

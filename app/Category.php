@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property integer $parent_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property string $image
  */
 class Category extends Model
 {
@@ -23,6 +24,22 @@ class Category extends Model
         'id' => 'integer',
         'parent_id' => 'integer',
     ];
+
+    /**
+     * @param string $image
+     */
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage(): string
+    {
+        return $this->image;
+    }
 
     protected $fillable = [
         'name', 'image'
