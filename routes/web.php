@@ -26,11 +26,15 @@ Auth::routes([
 
 Route::group([
     'middleware' => 'auth',
-    'namespace' => 'Admin'
+    'namespace' => 'Admin',
+    'prefix' => 'admin',
 ], function () {
     Route::group(['middleware' => 'is_admin'], function () {
         Route::get('/panel', 'OrderController@index')->name('panel');
     });
+
+    Route::resource('categories', 'CategoryController');
+
 });
 
 Route::group([

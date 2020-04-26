@@ -24,6 +24,10 @@ class Category extends Model
         'parent_id' => 'integer',
     ];
 
+    protected $fillable = [
+        'name', 'image'
+    ];
+
     /**
      * @return HasMany
      */
