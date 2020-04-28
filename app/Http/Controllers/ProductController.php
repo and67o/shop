@@ -27,7 +27,6 @@ class ProductController extends Controller
     public function index(Request $request, $categoryId = 0)
     {
         $products = Product::query()
-            ->select('id', 'description', 'name', 'price')
             ->paginate(
                 self::COUNT_OF_PAGE,
                 ['*'],

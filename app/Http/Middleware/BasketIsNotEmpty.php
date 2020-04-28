@@ -11,7 +11,7 @@ class BasketIsNotEmpty
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @param Closure $next
      * @return mixed
      */
@@ -19,14 +19,13 @@ class BasketIsNotEmpty
     {
         $orderId = session('orderId');
         /* @var $order Order */
-        if (is_null($orderId)) {
-            $order = Order::findOrFail($orderId);
-            if ($order->products()->count()) {
-                session()->flash('warning', 'Ваша корзина пуста');
-                return redirect()->route('home');
+        if (!is_null($orderId)) {
+            $order = Order::query()->findOrFail($orderId);
+            if ($order->products()->count() > 0) {
+                return $next($request);
             }
         }
-
-        return $next($request);
+        session()->flash('warning', 'Ваша корзина пуста');
+        return redirect()->route('home');
     }
 }

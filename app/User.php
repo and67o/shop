@@ -27,7 +27,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function isAdmin() {
+    public function isAdmin()
+    {
         return $this->is_admin == 1;
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }
