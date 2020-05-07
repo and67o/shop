@@ -21,6 +21,7 @@
                                                      document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                 </a>
+                <a href="{{ route('reset') }}">Сбросить базу</a>
                 @if(Auth::user()->isAdmin())
                     <a class="dropdown-item" href="{{route('panel')}}">Админка</a>
                 @else
