@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductsFilterRequest;
 use App\Product;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -20,19 +21,34 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param ProductsFilterRequest $request
      * @param int $categoryId
-     * @param Request $request
      * @return Factory|Application|View
      */
-    public function index(Request $request, $categoryId = 0)
+    public function index(ProductsFilterRequest $request, $categoryId = 0)
     {
-        $products = Product::query()
+        $query = Product::query();
+        if ($request->filled('price_from')) {
+            $query->where('price', '>=', $request->price_from);
+        }
+
+        if ($request->filled('price_to')) {
+            $query->where('price', '<=', $request->price_to);
+        }
+
+        foreach (['hit', 'new', 'recommend',] as $field) {
+            if ($request->has($field)) {
+                $query->where($field, 1);
+            }
+        }
+
+        $products = $query
             ->paginate(
                 self::COUNT_OF_PAGE,
                 ['*'],
                 'page',
                 (int)$request->input('page')
-            );
+            )->withPath('?' . $request->getQueryString());
 
         return view(
             'products.index',

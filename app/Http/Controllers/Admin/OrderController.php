@@ -9,7 +9,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::query()->where('status', 1)->get();
+        $orders = Order::query()->where('status', 1)->paginate();
         return view('auth.panel.index', compact('orders'));
     }
 
