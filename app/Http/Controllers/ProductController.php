@@ -27,7 +27,7 @@ class ProductController extends Controller
      */
     public function index(ProductsFilterRequest $request, $categoryId = 0)
     {
-        $query = Product::query();
+        $query = Product::with('category');
         if ($request->filled('price_from')) {
             $query->where('price', '>=', $request->price_from);
         }
