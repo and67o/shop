@@ -30,7 +30,45 @@ class Product extends Model
         'category_id' => 'integer',
     ];
 
-    protected $fillable = ['name', 'price', 'category_id', 'description', 'image'];
+    protected $fillable = ['name', 'price', 'category_id', 'description', 'image', 'hit', 'new', 'recommend'];
+
+    /**
+     * @return HasOne
+     */
+    public function category()
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
+    public function getPivot(): Pivot
+    {
+        return $this->pivot;
+    }
+
+    public function isHit()
+    {
+        return $this->hit === 1;
+    }
+
+    public function isNew()
+    {
+        return $this->new === 1;
+    }
+
+    public function isRecommend()
+    {
+        return $this->recommend === 1;
+
+    }
+
+    public function getPriceForCount()
+    {
+
+        if (!is_null($this->getPivot())) {
+            return $this->getPivot()->count * $this->getPrice();
+        }
+        return $this->getPrice();
+    }
 
     /**
      * @return float
@@ -72,6 +110,17 @@ class Product extends Model
         $this->image = $image;
     }
 
+    public function setNewAttribute($value) {
+        $this->attributes['new'] = $value === 'on' ? 1:0;
+    }
+
+    public function setHitAttribute($value) {
+        $this->attributes['hit'] = $value === 'on' ? 1:0;
+    }
+
+    public function setRecommendAttribute($value) {
+        $this->attributes['recommend'] = $value === 'on' ? 1:0;
+    }
 
     /**
      * @return string
@@ -127,27 +176,5 @@ class Product extends Model
     public function setPrice(float $price): void
     {
         $this->price = $price;
-    }
-
-    /**
-     * @return HasOne
-     */
-    public function category()
-    {
-        return $this->hasOne(Category::class, 'id', 'category_id');
-    }
-
-    public function getPivot(): Pivot
-    {
-        return $this->pivot;
-    }
-
-    public function getPriceForCount()
-    {
-
-        if (!is_null($this->getPivot())) {
-            return $this->getPivot()->count * $this->getPrice();
-        }
-        return $this->getPrice();
     }
 }

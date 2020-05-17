@@ -24,8 +24,8 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name' => 'required|min:3|max|255',
-            'description' => 'required|min:3|max|255',
+            'name' => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:255',
             'price' => 'required|numeric|min:1'
         ];
         if ($this->route()->named('categories.store')) {
