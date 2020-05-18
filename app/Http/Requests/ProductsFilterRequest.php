@@ -4,6 +4,15 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class ProductsFilterRequest
+ * @package App\Http\Requests
+ * @property string price_to
+ * @property string price_from
+ * @property int hit
+ * @property int new
+ * @property int recommend
+ */
 class ProductsFilterRequest extends FormRequest
 {
     /**
@@ -24,8 +33,8 @@ class ProductsFilterRequest extends FormRequest
     public function rules()
     {
         return [
-            'price_from' => 'numeric|min:0',
-            'price_to' => 'numeric|min:0',
+            'price_from' => 'nullable|numeric|min:0',
+            'price_to' => 'nullable|numeric|min:0',
         ];
     }
 }

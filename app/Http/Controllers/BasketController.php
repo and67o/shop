@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
-use App\Product;
+use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -65,6 +65,8 @@ class BasketController extends Controller
         /* @var $product Product */
         $product = Product::query()->find($productId);
 
+
+        Order::changeFullSum($product->getPrice());
         session()->flash('success', 'Товар добавлен' . $product->getName());
 
         return redirect()->route('basket');
@@ -96,6 +98,7 @@ class BasketController extends Controller
         }
         /* @var $product Product */
         $product = Product::query()->find($productId);
+        Order::changeFullSum(-$product->getPrice());
         session()->flash('warning', 'Товар удален' . $product->getName());
 
         return redirect()->route('basket');
@@ -133,6 +136,9 @@ class BasketController extends Controller
         } else {
             session()->flash('warning', 'случилось ошибка');
         }
+
+Order::eraseOrderSum();
+
         return redirect()->route('home');
     }
 }

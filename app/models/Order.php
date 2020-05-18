@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -57,6 +57,7 @@ class Order extends Model
     {
         $this->user_id = $user_id;
     }
+
     /**
      * @param string $phone
      */
@@ -120,15 +121,34 @@ class Order extends Model
         return $this->products;
     }
 
-    /**
-     * @return int
-     */
-    public function getFullPrice()
+    public function scopeActive($query)
     {
-        return $this->getProducts()
-            ->sum(function (Product $product) {
-                return $product->getPriceForCount();
-            });
+        return $query->where('status', 1);
+    }
+
+    public function calculateFullSum()
+    {
+        $sum = 0;
+        foreach ($this->getProducts() as $product) {
+            $sum += $product->getPriceForCount();
+        }
+        return $sum;
+    }
+
+    public  static function eraseOrderSum() {
+        session()->forget('full_order_sum');
+    }
+
+    public static function changeFullSum($changeSum)
+    {
+        $sum = self::getFullSum() + $changeSum;
+        session(['full_order_sum' => $sum]);
+
+    }
+
+    public static function getFullSum()
+    {
+        return session('full_order_sum', 0);
     }
 
     /**
